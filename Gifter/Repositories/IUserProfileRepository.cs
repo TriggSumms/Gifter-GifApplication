@@ -10,5 +10,7 @@ namespace Gifter.Repositories
         List<UserProfile> GetAllUsers();
         UserProfile GetById(int id);
         void Update(UserProfile user);
+
+        
     }
 }
