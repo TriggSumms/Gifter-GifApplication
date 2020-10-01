@@ -25,28 +25,6 @@ namespace Gifter.Controllers
             return Ok(_userProfileRepository.GetAllUsers());
         }
 
-        //SECONDARY METHOD...thats not "smart"
-        //[HttpGet]
-        //public IActionResult Get()
-        //{
-        //    var posts = _postRepository.GetAll();
-
-        //    foreach (var post in posts)
-        //    {
-        //        post.UserProfile = _userProfileRepository.GetById(post.UserProfileId);
-        //    }
-
-        //    return Ok(posts);
-        //}
-
-        //[HttpGet("GetWithComments")]
-        //public IActionResult GetWithComments()
-        //{
-        //    var posts = _postRepository.GetAllWithComments();
-        //    return Ok(posts);
-        //}
-
-
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
