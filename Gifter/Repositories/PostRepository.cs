@@ -348,7 +348,7 @@ namespace Gifter.Repositories
             }
         }
 
-        public void Add(Post post)
+        public void AddPost(Post post)
         {
             using (var conn = Connection)
             {

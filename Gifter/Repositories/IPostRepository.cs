@@ -5,7 +5,7 @@ namespace Gifter.Repositories
 {
     public interface IPostRepository
     {
-        void Add(Post post);
+        void AddPost(Post post);
         void Delete(int id);
         List<Post> GetAll();
         Post GetById(int id);
@@ -13,6 +13,6 @@ namespace Gifter.Repositories
 
         List<Post> GetAllWithComments();
 
-        Post GetPostByIdWithComments(int id);
+        //Post GetPostByIdWithComments(int id);
     }
 }

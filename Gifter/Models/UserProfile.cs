@@ -20,8 +20,7 @@ namespace Gifter.Models
         public DateTime DateCreated { get; set; }
 
         public string Bio { get; set; }
-
-        
-
+        public List<Post> Post { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

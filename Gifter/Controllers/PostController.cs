@@ -59,7 +59,7 @@ namespace Gifter.Controllers
         [HttpPost]
         public IActionResult Post(Post post)
         {
-            _postRepository.Add(post);
+            _postRepository.AddPost(post);
             return CreatedAtAction("Get", new { id = post.Id }, post);
         }
 
