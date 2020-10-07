@@ -40,24 +40,19 @@ const PostForm = () => {
     };
 
 
-    // const addPostz = () => {
-    //     return addPost(post).then((p) => {
-    //         // Navigate the user back to the home route
-    //         history.push("/");
-    //       });
-    // };
+
     addPost(post).then((p) => {
       // Navigate the user back to the home route
       history.push("/");
     });
   };
 
-
-
-
-//   useEffect(() => {
-//     addPost();
-// }, []);
+  // const submitForm = (e) => {
+  //   e.preventDefault();
+  //   addQuote({ text: quoteText })
+  //     .then(() => history.push("/"))
+  //     .catch((err) => alert(`An error ocurred: ${err.message}`));
+  // };
 
   return (
     <div className="container pt-4">

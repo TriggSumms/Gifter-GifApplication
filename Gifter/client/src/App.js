@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import { PostProvider } from "./providers/PostProvider";
+import { UserProfileProvider } from "./providers/UserProfileProvider";
 //import PostList from "./components/PostList";
 //import PostForm from "./components/PostForm";
 import ApplicationViews from "./components/ApplicationViews";
@@ -11,6 +12,7 @@ function App() {
   return (
     <div className="App">
       <Router>
+      <UserProfileProvider>
         <PostProvider>
         <Header /> 
          {/* <PostForm /> */}
@@ -18,6 +20,7 @@ function App() {
           
           {/* <PostList /> */}
         </PostProvider>
+        </UserProfileProvider>
       </Router>
     </div>
   );

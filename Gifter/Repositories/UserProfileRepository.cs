@@ -11,6 +11,50 @@ namespace Gifter.Repositories
     {
         public UserProfileRepository(IConfiguration configuration) : base(configuration) { }
 
+
+        //public UserProfile GetByFirebaseUserId(string firebaseUserId)
+        //{
+        //    using (var conn = Connection)
+        //    {
+        //        conn.Open();
+        //        using (var cmd = conn.CreateCommand())
+        //        {
+        //            cmd.CommandText = @"
+        //                SELECT up.Id, Up.FirebaseUserId, up.Name AS UserProfileName, up.Email, up.UserTypeId,
+        //                       ut.Name AS UserTypeName
+        //                  FROM UserProfile up
+        //                       LEFT JOIN UserType ut on up.UserTypeId = ut.Id
+        //                 WHERE FirebaseUserId = @FirebaseuserId";
+
+        //            DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
+
+        //            UserProfile userProfile = null;
+
+        //            var reader = cmd.ExecuteReader();
+        //            if (reader.Read())
+        //            {
+        //                userProfile = new UserProfile()
+        //                {
+        //                    Id = DbUtils.GetInt(reader, "Id"),
+        //                    FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
+        //                    Name = DbUtils.GetString(reader, "UserProfileName"),
+        //                    Email = DbUtils.GetString(reader, "Email"),
+        //                    UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
+        //                    UserType = new UserType()
+        //                    {
+        //                        Id = DbUtils.GetInt(reader, "UserTypeId"),
+        //                        Name = DbUtils.GetString(reader, "UserTypeName"),
+        //                    }
+        //                };
+        //            }
+        //            reader.Close();
+
+        //            return userProfile;
+        //        }
+        //    }
+        //}
+
+
         public List<UserProfile> GetAllUsers()
         {
             using (var conn = Connection)
@@ -19,7 +63,7 @@ namespace Gifter.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                          SELECT Id, Name, Email, ImageUrl, Bio, DateCreated
+                          SELECT Id, FirebaseUserId, Name, Email, ImageUrl, Bio, DateCreated
                             FROM UserProfile
                         ORDER BY DateCreated";
 
@@ -31,6 +75,7 @@ namespace Gifter.Repositories
                         users.Add(new UserProfile()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
+                            FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
                             Name = DbUtils.GetString(reader, "Name"),
                             Email = DbUtils.GetString(reader, "Email"),
                             ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
@@ -56,7 +101,7 @@ namespace Gifter.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                              SELECT Id, Name, Email, ImageUrl, Bio, DateCreated
+                              SELECT Id, FirebaseUserId, Name, Email, ImageUrl, Bio, DateCreated
                                 FROM UserProfile
                                WHERE Id = @Id";
 
@@ -72,6 +117,7 @@ namespace Gifter.Repositories
                         user = new UserProfile()
                         {
                             Id = id,
+                            FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
                             Name = DbUtils.GetString(reader, "Name"),
                             Email = DbUtils.GetString(reader, "Email"),
                             ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
@@ -87,7 +133,8 @@ namespace Gifter.Repositories
                 }
             }
         }
-        public void Add(UserProfile user)
+
+        public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {
             using (var conn = Connection)
             {
@@ -95,10 +142,53 @@ namespace Gifter.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO Post (Name, Email, ImageUrl, Bio, DateCreated)
-                        OUTPUT INSERTED.ID
-                        VALUES (@Name, @Email, @ImageUrl, @Bio, @DateCreated)";
+                              SELECT Id, FirebaseUserId, Name, Email, ImageUrl, Bio, DateCreated
+                                FROM UserProfile
+                                WHERE FirebaseUserId = @FirebaseUserId";
 
+
+
+                    DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
+
+
+                    UserProfile user = null;
+
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        user = new UserProfile()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
+                            Name = DbUtils.GetString(reader, "Name"),
+                            Email = DbUtils.GetString(reader, "Email"),
+                            ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                            Bio = DbUtils.GetString(reader, "Bio"),
+                            //UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
+                            DateCreated = DbUtils.GetDateTime(reader, "DateCreated")
+                        };
+
+                        reader.Close();
+
+                        return user;
+                    }
+                }
+            }
+        }
+
+   public void Add(UserProfile user)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO UserProfile (FirebaseUserId, Name, Email, ImageUrl, Bio, DateCreated)
+                        OUTPUT INSERTED.ID
+                        VALUES (@FirebaseUserId, @Name, @Email, @ImageUrl, @Bio, @DateCreated)";
+
+                    DbUtils.AddParameter(cmd, "@FirebaseUserId", user.FirebaseUserId);
                     DbUtils.AddParameter(cmd, "@Name", user.Name);
                     DbUtils.AddParameter(cmd, "@Email", user.Email);
                     DbUtils.AddParameter(cmd, "@ImageUrl", user.ImageUrl);
@@ -119,7 +209,9 @@ namespace Gifter.Repositories
                 {
                     cmd.CommandText = @"
                         UPDATE UserProfile
-                           SET Name = @Name,
+                           SET 
+                               FirebaseUserId = @FirebaseUserId,
+                               Name = @Name,
                                Email = @Email,
                                ImageUrl = @ImageUrl,
                                Bio = @Bio,
@@ -127,6 +219,7 @@ namespace Gifter.Repositories
 
                          WHERE Id = @Id";
 
+                    DbUtils.AddParameter(cmd, "@FirebaseUserId", user.FirebaseUserId);
                     DbUtils.AddParameter(cmd, "@Name", user.Name);
                     DbUtils.AddParameter(cmd, "@Email", user.Email);
                     DbUtils.AddParameter(cmd, "@ImageUrl", user.ImageUrl);

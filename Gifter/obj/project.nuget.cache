@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "ySEyulvb02vnRf93fR+0X8fiWl3Kiwr+v7rkI6NxDRw63E5pbQaDcG90ZloSKJnAakihHbdauX4Jyz1lt1FX0A==",
+  "dgSpecHash": "I0FqQpk7Q8ahK1QwQWFpu/GAnu55ggneKP8MBIHzNJFm+YuCNiAyhUZm1jCb6h0kC1v8ygWZCgy9e7tnn4iYgQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\stsum\\workspace\\csharp\\Gifter\\Gifter\\Gifter.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\stsum\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.8\\microsoft.aspnetcore.authentication.jwtbearer.3.1.8.nupkg.sha512",
     "C:\\Users\\stsum\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\stsum\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
     "C:\\Users\\stsum\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.0.1\\microsoft.data.sqlclient.sni.runtime.2.0.1.nupkg.sha512",
